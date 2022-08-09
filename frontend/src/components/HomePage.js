@@ -20,6 +20,7 @@ export default class HomePage extends Component {
     this.state = {
       roomCode: null,
     };
+    this.clearRoomCode = this.clearRoomCode.bind(this)
   }
 
 
@@ -39,7 +40,7 @@ export default class HomePage extends Component {
       <Grid container spacing={3}>
         <Grid item xs={12} align="center">
           <Typography variant="h3" compact="h3">
-            House Party
+            Spotify
           </Typography>
         </Grid>
         <Grid item xs={12} align="center">
@@ -54,6 +55,13 @@ export default class HomePage extends Component {
         </Grid>
       </Grid>
     );
+  }
+
+  // reset our room
+  clearRoomCode(){
+    this.setState({
+      roomCode: null,
+    });
   }
 
   render() {
@@ -73,7 +81,12 @@ export default class HomePage extends Component {
           />
           <Route path="/join" component={RoomJoinPage} />
           <Route path="/create" component={CreateRoomPage} />
-          <Route path="/room/:roomCode" component={Room} />
+          <Route 
+            path="/room/:roomCode" 
+            render={(props) => {
+              return <Room {...props} leaveRoomCallback={this.clearRoomCode} />;
+            }}
+          />
         </Switch>
       </Router>
     );
